@@ -1,16 +1,14 @@
-# todoapp
+# Todos - Your personal to - do App
 
-A new Flutter project.
+### Todos is a to - do app built on Flutter users can save their daily notes, delete them when completed and share them across multiple platforms
 
-## Getting Started
+## ScreenShots
 
-This project is a starting point for a Flutter application.
+ <table border="1">
+    <tr>
+        <td><img src="./Screenshots/SS1.jpeg" alt="" width="220" height="450"></td>
+        <td><img src="./Screenshots/SS2.jpeg" alt="" width="220" height="450"></td>
+        <td><img src="./Screenshots/SS3.jpeg" alt="" width="220" height="450"></td>
+    </tr>
+</table>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
