@@ -4,7 +4,7 @@
 
 ## ScreenShots
 
- <table border="1">
+ <table>
     <tr>
         <td><img src="./Screenshots/SS1.jpeg" alt="" width="220" height="450"></td>
         <td><img src="./Screenshots/SS2.jpeg" alt="" width="220" height="450"></td>
