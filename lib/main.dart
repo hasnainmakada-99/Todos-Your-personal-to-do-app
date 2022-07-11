@@ -1,5 +1,3 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,8 +11,6 @@ import 'package:todoapp/services/bloc/AuthStates.dart';
 import 'package:todoapp/services/bloc/internet_cubit.dart';
 import 'package:todoapp/services/bloc/internet_state.dart';
 import 'package:todoapp/utilities/loading_dialog.dart';
-
-// import 'package:todoapp/views/Splash_screen.dart';
 import 'package:todoapp/views/login_view.dart';
 import 'package:todoapp/views/notes/add_notes.dart';
 import 'package:todoapp/views/register_view.dart';
