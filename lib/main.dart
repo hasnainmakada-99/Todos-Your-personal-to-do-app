@@ -20,6 +20,7 @@ import 'package:splash_screen_view/SplashScreenView.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   runApp(
     BlocProvider<AuthBloc>(
       create: (context) => AuthBloc(),

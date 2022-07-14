@@ -7,6 +7,7 @@ import 'package:todoapp/Ads/Adhelper.dart';
 import 'package:todoapp/constants/routes.dart';
 import 'package:todoapp/services/auth/auth_services.dart';
 import 'package:todoapp/services/bloc/AuthBloc.dart';
+import 'package:todoapp/services/bloc/AuthStates.dart';
 import 'package:todoapp/services/cloud/cloud_note.dart';
 import 'package:todoapp/services/cloud/firebase_cloud__storage.dart';
 import 'package:todoapp/utilities/alert_dialog.dart';
@@ -27,11 +28,33 @@ class notesView extends StatefulWidget {
 class _notesViewState extends State<notesView> {
   late final FirebaseCloudStorage _notesService;
   String get user_id => AuthService.firebase().currentUser!.id;
-
+  late BannerAd _bannerAd;
+  bool isLoaded = false;
   @override
   void initState() {
+    initBannerAd();
+    //BlocProvider.of<>(context)
+    _bannerAd.load();
     _notesService = FirebaseCloudStorage();
     super.initState();
+  }
+
+  initBannerAd() {
+    _bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: 'ca-app-pub-8351931034895476/3722995036',
+      request: AdRequest(),
+      listener: BannerAdListener(onAdLoaded: ((ad) {
+        setState(
+          () {
+            isLoaded = true;
+          },
+        );
+      }), onAdFailedToLoad: (ad, err) {
+        print(err);
+      }),
+    );
+    _bannerAd.load();
   }
 
   @override
@@ -98,6 +121,13 @@ class _notesViewState extends State<notesView> {
           }
         },
       ),
+      bottomNavigationBar: isLoaded
+          ? Container(
+              width: _bannerAd.size.width.toDouble(),
+              height: _bannerAd.size.height.toDouble(),
+              child: AdWidget(ad: _bannerAd),
+            )
+          : SizedBox(),
     );
   }
 
@@ -126,3 +156,12 @@ Future<void> showErrorDialog(BuildContext context, String text) {
     },
   );
 }
+
+
+ // bottomNavigationBar: isLoaded
+      //     ? Container(
+      //         width: _bannerAd.size.width.toDouble(),
+      //         height: _bannerAd.size.height.toDouble(),
+      //         child: AdWidget(ad: _bannerAd),
+      //       )
+      //     : SizedBox(),

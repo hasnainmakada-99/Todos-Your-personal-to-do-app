@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show immutable;
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../auth/auth_user.dart';
 import 'package:equatable/equatable.dart';
 

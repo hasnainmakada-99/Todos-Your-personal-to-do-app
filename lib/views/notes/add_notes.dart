@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:todoapp/constants/routes.dart';
 import 'package:todoapp/extnsions/get_arguments.dart';
 import 'package:todoapp/services/auth/auth_services.dart';
@@ -21,75 +22,36 @@ class _AddUpdateNotesState extends State<AddUpdateNotes> {
   CloudNote? _note;
   late final FirebaseCloudStorage _notesService;
   late final TextEditingController controller;
-
+  late BannerAd _bannerAd;
+  bool isLoaded = false;
   @override
   void initState() {
+    initBannerAd();
     _notesService = FirebaseCloudStorage();
     controller = TextEditingController();
     super.initState();
   }
 
-  // void textControllerListener() async {
-  //   final note = _note;
-  //   if (note == null) {
-  //     return;
-  //   } else {
-  //     final text = controller.text;
-  //     await _notesService.updateNotes(
-  //       documentId: note.documentId,
-  //       text: text,
-  //     );
-  //   }
-  // }
-
-  // void SetUptextcontrollerListener() async {
-  //   controller.removeListener(textControllerListener);
-  //   controller.addListener(textControllerListener);
-  // }
-
-  // Future<CloudNote> createOrGetexistingNotes(BuildContext context) async {
-  //   final widgetNote = context.getArgument<CloudNote>();
-
-  //   if (widgetNote != null) {
-  //     _note = widgetNote;
-  //     controller.text = widgetNote.text;
-  //     return widgetNote;
-  //   }
-
-  //   final existingNote = _note;
-  //   if (existingNote != null) {
-  //     return existingNote;
-  //   } else {
-  //     final currentUser = AuthService.firebase().currentUser!;
-  //     final userId = currentUser.id;
-  //     final newNote = _notesService.createNewNote(ownerUserId: userId);
-  //     _note = await newNote;
-  //     return newNote;
-  //   }
-  // }
-
-  // void deleteNoteIfTextEmpty() {
-  //   final note = _note;
-  //   if (controller.text.isEmpty && note != null) {
-  //     _notesService.deleteNote(documentId: note.documentId);
-  //   }
-  // }
-
-  // void saveNoteIfTextNotEmpty() async {
-  //   final note = _note;
-  //   final text = controller.text;
-  //   if (note != null && text.isNotEmpty) {
-  //     await _notesService.updateNotes(
-  //       documentId: note.documentId,
-  //       text: text,
-  //     );
-  //   }
-  // }
+  initBannerAd() {
+    _bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: 'ca-app-pub-8351931034895476/3722995036',
+      request: AdRequest(),
+      listener: BannerAdListener(onAdLoaded: ((ad) {
+        setState(
+          () {
+            isLoaded = true;
+          },
+        );
+      }), onAdFailedToLoad: (ad, err) {
+        print(err);
+      }),
+    );
+    _bannerAd.load();
+  }
 
   @override
   void dispose() {
-    // deleteNoteIfTextEmpty();
-    // saveNoteIfTextNotEmpty();
     controller.dispose();
     super.dispose();
   }
@@ -175,8 +137,13 @@ class _AddUpdateNotesState extends State<AddUpdateNotes> {
           ),
         ],
       ),
-      // default:
-      //   return const Center(child: CircularProgressIndicator());
+      bottomNavigationBar: isLoaded
+          ? Container(
+              width: _bannerAd.size.width.toDouble(),
+              height: _bannerAd.size.height.toDouble(),
+              child: AdWidget(ad: _bannerAd),
+            )
+          : SizedBox(),
     );
   }
 }
