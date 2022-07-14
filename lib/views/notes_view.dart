@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:todoapp/Ads/Adhelper.dart';
 import 'package:todoapp/constants/routes.dart';
 import 'package:todoapp/services/auth/auth_services.dart';
 import 'package:todoapp/services/bloc/AuthBloc.dart';
@@ -91,13 +93,17 @@ class _notesViewState extends State<notesView> {
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
-
             default:
               return const Center(child: CircularProgressIndicator());
           }
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
 
